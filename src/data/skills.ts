@@ -384,10 +384,10 @@ const RAW_FACE_SKILLS: Record<CubeFaceId, RawTile[]> = {
       tagline: 'Practical experience solving user issues under live queues.',
     },
     {
-      id: 'mst',
-      short: 'MST',
-      name: 'MST Connect PH',
-      tagline: 'Project-based full-stack training across frontend, backend, and SQL.',
+      id: 'tech-support',
+      short: 'Tech',
+      name: 'Technical Support',
+      tagline: 'Diagnosing hardware, software, and account issues for end users.',
     },
     {
       id: 'curiosity',
