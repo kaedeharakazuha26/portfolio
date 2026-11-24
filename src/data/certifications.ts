@@ -14,7 +14,7 @@ export interface CertificationItem {
   credentialUrl?: string;
   pdfUrl?: string;
   imageUrl?: string;
-  summary: string;
+  summary?: string;
   topics?: string[];
 }
 
@@ -29,9 +29,7 @@ export const CERTIFICATIONS: CertificationItem[] = [
     credentialId: '60-Hour Training · PRC CPD OCE-2022-062',
     imageUrl: `${BASE}certificates/mstconnect-fullstack-bootcamp-2026.jpg`,
     pdfUrl: `${BASE}certificates/mstconnect-fullstack-bootcamp-2026.pdf`,
-    summary:
-      'Completed 60 hours of hands-on training from Aug 24 to Oct 2, 2026 covering developer foundations, HTML/CSS, JavaScript, back-end databases and APIs, React, and capstone projects.',
-    topics: ['HTML & CSS', 'JavaScript', 'Back-End & APIs', 'React', 'Capstone'],
+    topics: ['HTML & CSS', 'JavaScript', 'Back-End & APIs', 'React'],
   },
   {
     id: 'cert-2',

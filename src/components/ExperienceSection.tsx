@@ -16,7 +16,7 @@ const STACK_DOT_COLORS: Record<string, string> = {
   'IT Support': '#0891b2',
   'Technical Support': '#15803d',
   Troubleshooting: '#eab308',
-  Documentation: '#64748b',
+  Documentation: '#71717a',
   Escalation: '#be123c',
 };
 
@@ -26,59 +26,58 @@ export function ExperienceSection() {
       id="experience"
       className="relative z-20 px-5 py-16 sm:px-8 sm:py-24"
     >
-      <div className="mx-auto max-w-5xl">
-        {/* Left-aligned split heading breaks monotony after Tech Stack's centered header */}
-        <div className="mb-10 flex flex-col justify-between gap-3 border-b border-slate-900/12 pb-6 dark:border-white/12 sm:mb-14 sm:flex-row sm:items-end">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-10 flex flex-col justify-between gap-3 border-b border-zinc-900/12 pb-6 dark:border-white/12 sm:mb-12 sm:flex-row sm:items-end">
           <div>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+            <p className="font-mono text-xs font-medium text-amber-700 dark:text-amber-400">
+              04 / CAREER &amp; TRAINING
+            </p>
+            <h2 className="font-display mt-1 text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white sm:text-5xl">
               Experience
             </h2>
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 sm:text-base">
-              IT support background and full-stack training track.
-            </p>
           </div>
-          <p className="font-mono text-xs text-slate-600 dark:text-slate-400">
+          <p className="font-mono text-xs text-zinc-600 dark:text-zinc-400">
             {EXPERIENCE_ITEMS.length} roles &amp; milestones
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-5">
           {EXPERIENCE_ITEMS.map((item) => (
             <article
               key={item.id}
               data-ui-block="true"
-              className="grid grid-cols-1 gap-5 rounded-xl border border-slate-900/18 bg-white p-6 dark:border-white/18 dark:bg-[#0a0f1c] md:grid-cols-12 sm:p-8"
+              className="grid grid-cols-1 gap-5 rounded-xl border border-zinc-900/16 bg-white p-6 dark:border-white/14 dark:bg-[#121318] md:grid-cols-12 sm:p-7"
             >
               <div className="md:col-span-4">
-                <div className="inline-flex items-center gap-2 font-mono text-xs font-medium text-slate-600 dark:text-slate-400">
+                <div className="inline-flex items-center gap-2 font-mono text-xs font-medium text-zinc-600 dark:text-zinc-400">
                   <span
                     className={`h-2 w-2 rounded-full ${
                       item.current
-                        ? 'bg-emerald-500'
-                        : 'border border-slate-500 dark:border-slate-400'
+                        ? 'bg-amber-500'
+                        : 'border border-zinc-500 dark:border-zinc-400'
                     }`}
                     aria-hidden="true"
                   />
                   <span>{item.period}</span>
                 </div>
 
-                <h3 className="font-display mt-2.5 text-xl font-bold tracking-tight text-slate-950 dark:text-white">
+                <h3 className="font-display mt-2.5 text-xl font-bold tracking-tight text-zinc-950 dark:text-white">
                   {item.role}
                 </h3>
-                <p className="mt-1 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <p className="mt-1 text-sm font-semibold text-zinc-800 dark:text-zinc-200">
                   {item.company}
                 </p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400">
                   {item.location}
                 </p>
               </div>
 
               <div className="md:col-span-8">
-                <ul className="space-y-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                <ul className="space-y-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
                   {item.bullets.map((bullet, bIdx) => (
                     <li key={bIdx} className="flex items-start gap-3">
                       <span
-                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-500 dark:bg-slate-400"
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-600 dark:bg-amber-400"
                         aria-hidden="true"
                       />
                       <span>{bullet}</span>
@@ -90,12 +89,12 @@ export function ExperienceSection() {
                   {item.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="inline-flex items-center gap-1.5 rounded-md border border-slate-900/15 bg-slate-100 px-2.5 py-1 font-mono text-xs font-medium text-slate-800 dark:border-white/15 dark:bg-white/[0.05] dark:text-slate-200"
+                      className="inline-flex items-center gap-1.5 rounded-md border border-zinc-900/12 bg-zinc-100 px-2.5 py-1 font-mono text-xs font-medium text-zinc-800 dark:border-white/12 dark:bg-white/[0.05] dark:text-zinc-200"
                     >
                       <span
                         className="h-2 w-2 rounded-[2px]"
                         style={{
-                          backgroundColor: STACK_DOT_COLORS[tech] ?? '#2563eb',
+                          backgroundColor: STACK_DOT_COLORS[tech] ?? '#f59e0b',
                         }}
                         aria-hidden="true"
                       />

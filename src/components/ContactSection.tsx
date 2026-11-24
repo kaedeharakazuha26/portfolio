@@ -1,15 +1,28 @@
 import { useState, type FormEvent } from 'react';
-import { AlertCircle, Check, CheckCircle2, Copy, Loader2 } from 'lucide-react';
+import {
+  AlertCircle,
+  Check,
+  CheckCircle2,
+  Copy,
+  Loader2,
+  RotateCw,
+} from 'lucide-react';
 import { PORTFOLIO_CONFIG } from '../data/config';
+import { GithubIcon, LinkedinIcon } from './SocialIcons';
 
 interface ContactSectionProps {
   onSubmitted: () => void;
+  onCelebrate: () => void;
   onNotify: (message: string) => void;
 }
 
 type SubmitState = 'idle' | 'loading' | 'success' | 'error';
 
-export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
+export function ContactSection({
+  onSubmitted,
+  onCelebrate,
+  onNotify,
+}: ContactSectionProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -63,7 +76,7 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
         });
         if (!res.ok) throw new Error('Delivery failed');
       } else {
-        await new Promise((resolve) => window.setTimeout(resolve, 420));
+        await new Promise((resolve) => window.setTimeout(resolve, 400));
       }
 
       setName('');
@@ -85,72 +98,96 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
   return (
     <section
       id="contact"
-      className="relative z-20 flex min-h-[calc(100dvh-4.5rem)] flex-col justify-center px-5 pb-20 pt-16 sm:px-8 sm:pt-20"
+      className="relative z-20 px-5 py-16 sm:px-8 sm:py-24"
     >
-      <div className="mx-auto w-full max-w-7xl">
-        <div className="mb-10 text-center">
-          <h2 className="font-display text-3xl font-extrabold uppercase leading-[1.06] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
-            LET&apos;S WORK
-            <br />
-            TOGETHER
-          </h2>
-        </div>
+      <div className="mx-auto max-w-6xl">
+        {/* Split 2-column architectural Contact Card (distinct from single-column form clone) */}
+        <div
+          data-ui-block="true"
+          className="grid grid-cols-1 overflow-hidden rounded-xl border border-zinc-900/18 bg-white dark:border-white/16 dark:bg-[#121318] lg:grid-cols-12"
+        >
+          {/* Left direct info & links rail */}
+          <div className="flex flex-col justify-between border-b border-zinc-900/12 bg-zinc-50 p-6 dark:border-white/12 dark:bg-[#0e0f14] sm:p-8 lg:col-span-5 lg:border-b-0 lg:border-r">
+            <div>
+              <p className="font-mono text-xs font-medium text-amber-700 dark:text-amber-400">
+                05 / GET IN TOUCH
+              </p>
+              <h2 className="font-display mt-2 text-3xl font-extrabold leading-tight tracking-tight text-zinc-950 dark:text-white sm:text-4xl">
+                Start a conversation.
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Open to junior full-stack developer roles, collaborative builds, and
+                web/AI tooling work.
+              </p>
 
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
-          <div
-            data-ui-block="true"
-            className="rounded-xl border border-slate-900/18 bg-white p-6 dark:border-white/18 dark:bg-[#0a0f1c] sm:p-8 lg:col-span-6"
-          >
-            <h3 className="font-display text-2xl font-extrabold text-slate-950 dark:text-white sm:text-3xl">
-              Contact Form
-            </h3>
+              <div className="mt-6 space-y-3">
+                {PORTFOLIO_CONFIG.email && (
+                  <div className="flex items-center justify-between gap-2 rounded-lg border border-zinc-900/14 bg-white px-3.5 py-2.5 dark:border-white/14 dark:bg-[#161820]">
+                    <a
+                      href={`mailto:${PORTFOLIO_CONFIG.email}`}
+                      className="truncate text-sm font-medium text-zinc-950 underline decoration-amber-600/60 underline-offset-4 dark:text-white"
+                    >
+                      {PORTFOLIO_CONFIG.displayEmail || PORTFOLIO_CONFIG.email}
+                    </a>
+                    <button
+                      type="button"
+                      onClick={handleCopyEmail}
+                      aria-label="Copy email address"
+                      className="inline-flex min-h-9 items-center gap-1 rounded-md border border-zinc-900/14 px-2.5 font-mono text-xs text-zinc-700 dark:border-white/14 dark:text-zinc-300"
+                    >
+                      {copied ? (
+                        <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+                      )}
+                      <span>{copied ? 'Copied' : 'Copy'}</span>
+                    </button>
+                  </div>
+                )}
 
-            <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              {PORTFOLIO_CONFIG.email ? (
-                <>
-                  Email me directly at{' '}
-                  <a
-                    href={`mailto:${PORTFOLIO_CONFIG.email}`}
-                    className="font-semibold text-slate-950 underline decoration-blue-600/70 underline-offset-4 hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
-                  >
-                    {PORTFOLIO_CONFIG.displayEmail || PORTFOLIO_CONFIG.email}
-                  </a>{' '}
-                  <button
-                    type="button"
-                    onClick={handleCopyEmail}
-                    aria-label="Copy email address"
-                    className="ml-1 inline-flex min-h-8 items-center gap-1 rounded-md border border-slate-900/15 bg-slate-100 px-2 py-0.5 align-middle font-mono text-xs text-slate-800 transition-colors hover:border-slate-900/40 dark:border-white/15 dark:bg-white/[0.06] dark:text-slate-200"
-                  >
-                    {copied ? (
-                      <Check className="h-3 w-3 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
-                    ) : (
-                      <Copy className="h-3 w-3" aria-hidden="true" />
-                    )}
-                    <span>{copied ? 'Copied' : 'Copy'}</span>
-                  </button>{' '}
-                  or send a note below.
-                </>
-              ) : (
-                <>
-                  Have a project, role, or question? Send a note below or reach me on{' '}
+                <div className="flex flex-wrap gap-2.5">
                   <a
                     href={PORTFOLIO_CONFIG.socials.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="font-semibold text-slate-950 underline decoration-blue-600/70 underline-offset-4 hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-4 text-xs font-semibold text-zinc-950 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-white dark:hover:border-amber-400"
                   >
-                    GitHub
+                    <GithubIcon className="h-4 w-4" />
+                    <span>GitHub</span>
                   </a>
-                  .
-                </>
-              )}
-            </p>
 
+                  <a
+                    href={PORTFOLIO_CONFIG.socials.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-4 text-xs font-semibold text-zinc-950 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-white dark:hover:border-amber-400"
+                  >
+                    <LinkedinIcon className="h-4 w-4" />
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 border-t border-zinc-900/12 pt-5 dark:border-white/12">
+              <button
+                type="button"
+                onClick={onCelebrate}
+                className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-3.5 font-mono text-xs font-medium text-zinc-800 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-zinc-200 dark:hover:border-amber-400"
+              >
+                <RotateCw className="h-3.5 w-3.5 text-amber-700 dark:text-amber-400" aria-hidden="true" />
+                <span>Spin the Rubik&apos;s Cube</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Right validated form panel */}
+          <div className="p-6 sm:p-8 lg:col-span-7">
             {submitState === 'success' ? (
               <div
                 role="status"
                 aria-live="polite"
-                className="mt-6 rounded-lg border border-emerald-600/40 bg-emerald-50 p-5 dark:border-emerald-400/35 dark:bg-emerald-950/40"
+                className="rounded-lg border border-emerald-700/35 bg-emerald-50 p-5 dark:border-emerald-400/35 dark:bg-emerald-950/40"
               >
                 <div className="flex items-start gap-3">
                   <CheckCircle2
@@ -158,10 +195,10 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                     aria-hidden="true"
                   />
                   <div>
-                    <p className="text-sm font-semibold text-slate-950 dark:text-white">
+                    <p className="text-sm font-semibold text-zinc-950 dark:text-white">
                       Message received
                     </p>
-                    <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
+                    <p className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
                       {feedbackText}
                     </p>
                     <button
@@ -170,7 +207,7 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                         setSubmitState('idle');
                         setFeedbackText('');
                       }}
-                      className="mt-4 min-h-11 rounded-lg bg-slate-950 px-4 text-xs font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+                      className="mt-4 min-h-11 rounded-lg bg-amber-700 px-4 text-xs font-semibold text-white transition-colors hover:bg-amber-800 dark:bg-amber-500 dark:text-[#09090b] dark:hover:bg-amber-400"
                     >
                       Send another message
                     </button>
@@ -182,7 +219,7 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                 onSubmit={handleSubmit}
                 noValidate
                 aria-busy={submitState === 'loading'}
-                className="mt-6 space-y-4"
+                className="space-y-4"
               >
                 {submitState === 'error' && (
                   <div
@@ -198,7 +235,7 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                   <div>
                     <label
                       htmlFor="contact-name"
-                      className="mb-1.5 block text-xs font-semibold text-slate-800 dark:text-slate-200"
+                      className="mb-1.5 block text-xs font-semibold text-zinc-800 dark:text-zinc-200"
                     >
                       Full name
                     </label>
@@ -214,7 +251,7 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                           if (submitState === 'error') setSubmitState('idle');
                         }}
                         placeholder="Your Name"
-                        className="h-11 w-full scroll-mt-24 rounded-[7px] bg-[#f1f5f9] px-3.5 text-sm text-slate-950 placeholder:text-slate-600 dark:bg-[#161a24] dark:text-white dark:placeholder:text-slate-400"
+                        className="h-11 w-full scroll-mt-24 rounded-[7px] bg-[#f5f4f0] px-3.5 text-sm text-zinc-950 placeholder:text-zinc-600 dark:bg-[#181920] dark:text-white dark:placeholder:text-zinc-400"
                       />
                     </div>
                   </div>
@@ -222,7 +259,7 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                   <div>
                     <label
                       htmlFor="contact-email"
-                      className="mb-1.5 block text-xs font-semibold text-slate-800 dark:text-slate-200"
+                      className="mb-1.5 block text-xs font-semibold text-zinc-800 dark:text-zinc-200"
                     >
                       Email address
                     </label>
@@ -238,7 +275,7 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                           if (submitState === 'error') setSubmitState('idle');
                         }}
                         placeholder="email@example.com"
-                        className="h-11 w-full scroll-mt-24 rounded-[7px] bg-[#f1f5f9] px-3.5 text-sm text-slate-950 placeholder:text-slate-600 dark:bg-[#161a24] dark:text-white dark:placeholder:text-slate-400"
+                        className="h-11 w-full scroll-mt-24 rounded-[7px] bg-[#f5f4f0] px-3.5 text-sm text-zinc-950 placeholder:text-zinc-600 dark:bg-[#181920] dark:text-white dark:placeholder:text-zinc-400"
                       />
                     </div>
                   </div>
@@ -247,7 +284,7 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                 <div>
                   <label
                     htmlFor="contact-message"
-                    className="mb-1.5 block text-xs font-semibold text-slate-800 dark:text-slate-200"
+                    className="mb-1.5 block text-xs font-semibold text-zinc-800 dark:text-zinc-200"
                   >
                     Your message
                   </label>
@@ -263,19 +300,19 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
                         if (submitState === 'error') setSubmitState('idle');
                       }}
                       placeholder="Drop your message here..."
-                      className="w-full scroll-mt-24 resize-none rounded-[7px] bg-[#f1f5f9] p-3.5 text-sm text-slate-950 placeholder:text-slate-600 dark:bg-[#161a24] dark:text-white dark:placeholder:text-slate-400"
+                      className="w-full scroll-mt-24 resize-none rounded-[7px] bg-[#f5f4f0] p-3.5 text-sm text-zinc-950 placeholder:text-zinc-600 dark:bg-[#181920] dark:text-white dark:placeholder:text-zinc-400"
                     />
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-600 dark:text-slate-400">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400">
                   Your details are only used to reply to your message.
                 </p>
 
                 <button
                   type="submit"
                   disabled={submitState === 'loading'}
-                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-slate-950 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 disabled:opacity-60 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-amber-700 px-5 text-sm font-semibold text-white transition-colors hover:bg-amber-800 disabled:opacity-60 dark:bg-amber-500 dark:text-[#09090b] dark:hover:bg-amber-400"
                 >
                   {submitState === 'loading' ? (
                     <>
@@ -289,8 +326,6 @@ export function ContactSection({ onSubmitted, onNotify }: ContactSectionProps) {
               </form>
             )}
           </div>
-
-          <div className="h-56 lg:col-span-6 lg:h-[420px]" aria-hidden="true" />
         </div>
       </div>
     </section>

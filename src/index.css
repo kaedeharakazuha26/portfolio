@@ -3,8 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-display: "Unbounded", system-ui, sans-serif;
-  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
@@ -20,7 +20,6 @@
     min-height: 100dvh;
   }
 
-  /* Restore pointer affordance across interactive controls after CSS preflight */
   a[href],
   button:not(:disabled),
   summary,
@@ -42,14 +41,13 @@
     cursor: not-allowed;
   }
 
-  /* High-contrast keyboard focus indicator in both light and dark modes */
   :is(a, button, input, textarea, select, [tabindex]):focus-visible {
-    outline: 2px solid #2563eb;
+    outline: 2px solid #b45309;
     outline-offset: 2px;
   }
 
   .dark :is(a, button, input, textarea, select, [tabindex]):focus-visible {
-    outline: 2px solid #60a5fa;
+    outline: 2px solid #f59e0b;
     outline-offset: 2px;
   }
 }
@@ -63,19 +61,19 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.35);
+  background: rgba(161, 161, 170, 0.35);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.55);
+  background: rgba(245, 158, 11, 0.6);
 }
 
-/* Single allowed focus-border accent on contact form fields */
+/* Single focus-border accent on contact form inputs */
 .contact-field-wrap {
   border-radius: 0.5rem;
   padding: 1px;
-  background: rgba(15, 23, 42, 0.22);
+  background: rgba(17, 18, 23, 0.22);
   transition: background 180ms ease;
 }
 
@@ -84,11 +82,11 @@
 }
 
 .contact-field-wrap:focus-within {
-  background: #2563eb;
+  background: #b45309;
 }
 
 .dark .contact-field-wrap:focus-within {
-  background: #60a5fa;
+  background: #f59e0b;
 }
 
 @media (prefers-reduced-motion: reduce) {

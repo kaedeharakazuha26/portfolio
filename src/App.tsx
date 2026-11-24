@@ -4,7 +4,8 @@ import { PORTFOLIO_CONFIG } from './data/config';
 import { DEFAULT_SKILL, type CubeFaceId, type CubeSkill } from './data/skills';
 import { setSoundEnabled } from './lib/sound';
 import type { CubeMove } from './lib/cubeLogic';
-import { StarfieldCanvas } from './components/StarfieldCanvas';
+import { WebGLFluidCanvas } from './components/WebGLFluidCanvas';
+import { AmbientLinksCanvas } from './components/AmbientLinksCanvas';
 import {
   RubiksCubeCanvas,
   type RubiksCubeHandle,
@@ -13,10 +14,10 @@ import { Preloader } from './components/Preloader';
 import { ElasticCursor } from './components/ElasticCursor';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
-import { SkillsSection } from './components/SkillsSection';
-import { ExperienceSection } from './components/ExperienceSection';
-import { CertificationsSection } from './components/CertificationsSection';
 import { ProjectsSection } from './components/ProjectsSection';
+import { SkillsSection } from './components/SkillsSection';
+import { CertificationsSection } from './components/CertificationsSection';
+import { ExperienceSection } from './components/ExperienceSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 
@@ -71,7 +72,7 @@ export function App() {
   }, [soundOn]);
 
   useEffect(() => {
-    const ids = ['hero', 'skills', 'experience', 'certifications', 'projects', 'contact'];
+    const ids = ['hero', 'projects', 'skills', 'certifications', 'experience', 'contact'];
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -94,8 +95,8 @@ export function App() {
 
   useEffect(() => {
     console.log(
-      `%c  ■ ■ ■   ${PORTFOLIO_CONFIG.projectName} | 3D Rubik's Cube Portfolio\n  ■ ■ ■   Tip: Scroll to Tech Stack and press U D L R F B (or Shift+key).`,
-      'color: #60a5fa; font-family: monospace; font-size: 12px; font-weight: bold;',
+      `%c  ■ ■ ■   ${PORTFOLIO_CONFIG.projectName} | 3D Rubik's Cube Portfolio\n  ■ ■ ■   Tip: Scroll to 54-Tile Tech Stack and press U D L R F B (or Shift+key).`,
+      'color: #f59e0b; font-family: monospace; font-size: 12px; font-weight: bold;',
     );
   }, []);
 
@@ -128,17 +129,17 @@ export function App() {
     cubeRef.current?.enqueueMove(move);
   }, []);
 
-  const handleContactSubmitted = useCallback(() => {
+  const handleCelebrate = useCallback(() => {
     cubeRef.current?.celebrate();
   }, []);
 
   const activeSkill = hoveredSkill ?? selectedSkill;
 
   return (
-    <div className="relative min-h-[100dvh] overflow-x-clip bg-[#eef2f7] text-[#090d16] transition-colors duration-300 dark:bg-[#05070e] dark:text-white">
+    <div className="relative min-h-[100dvh] overflow-x-clip bg-[#f5f4f0] text-[#111217] transition-colors duration-300 dark:bg-[#09090b] dark:text-[#fafafa]">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-amber-500 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-[#09090b]"
       >
         Skip to main content
       </a>
@@ -146,7 +147,17 @@ export function App() {
       <Preloader ready={sceneReady} />
       <ElasticCursor disabled={reducedMotion} />
 
-      <StarfieldCanvas theme={theme} reducedMotion={reducedMotion} />
+      {/* Layered GPU Navier-Stokes Fluid + Ambient Links Node Network (always active unless motion is paused) */}
+      <WebGLFluidCanvas
+        theme={theme}
+        enabled
+        reducedMotion={reducedMotion}
+      />
+      <AmbientLinksCanvas
+        theme={theme}
+        enabled
+        reducedMotion={reducedMotion}
+      />
 
       <RubiksCubeCanvas
         ref={cubeRef}
@@ -171,8 +182,10 @@ export function App() {
       <main id="main-content">
         <HeroSection
           onQuickTwist={handleTwistRandom}
+          onQuickScramble={handleScramble}
           reducedMotion={reducedMotion}
         />
+        <ProjectsSection reducedMotion={reducedMotion} />
         <SkillsSection
           activeSkill={activeSkill}
           totalMoves={totalMoves}
@@ -185,11 +198,11 @@ export function App() {
           onSolve={handleSolve}
           onKeyMove={handleKeyMove}
         />
-        <ExperienceSection />
         <CertificationsSection />
-        <ProjectsSection />
+        <ExperienceSection />
         <ContactSection
-          onSubmitted={handleContactSubmitted}
+          onSubmitted={handleCelebrate}
+          onCelebrate={handleCelebrate}
           onNotify={notify}
         />
       </main>
@@ -204,7 +217,7 @@ export function App() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 12 }}
-            className="fixed bottom-4 right-4 z-50 max-w-sm rounded-lg border border-blue-500/40 bg-slate-950 px-4 py-3 text-xs font-medium text-white shadow-xl"
+            className="fixed bottom-24 right-4 z-50 max-w-sm rounded-lg border border-amber-500/40 bg-zinc-950 px-4 py-3 text-xs font-medium text-white shadow-xl"
           >
             {toastMessage}
           </motion.div>

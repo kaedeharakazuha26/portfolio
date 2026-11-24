@@ -133,34 +133,34 @@ function isInteractiveDomTarget(target: EventTarget | null): boolean {
 
 const SECTION_IDS = [
   'hero',
-  'skills',
-  'experience',
-  'certifications',
   'projects',
+  'skills',
+  'certifications',
+  'experience',
   'contact',
 ] as const;
 
-const CONTACT_INDEX = SECTION_IDS.length - 1;
-const isBackdropSection = (idx: number) => idx >= 2 && idx <= 4;
+const SKILLS_INDEX = 2;
+const isInteractiveCubeSection = (idx: number) => idx === 0 || idx === SKILLS_INDEX;
 
 function getPoses(isDesktop: boolean): SectionPose[] {
   if (isDesktop) {
     return [
-      { x: 2.0, y: 0.05, z: 0, scale: 0.88, rx: 0.42, ry: -0.58, rz: 0.06, ambientSpin: 0.0, canvasOpacity: 1 },
-      { x: 0.78, y: -0.08, z: 0, scale: 1.0, rx: 0.28, ry: -0.45, rz: 0.0, ambientSpin: 0.0, canvasOpacity: 1 },
-      { x: 0.0, y: -0.25, z: -1.6, scale: 0.78, rx: 0.48, ry: 0.65, rz: -0.1, ambientSpin: 0.22, canvasOpacity: 0.4 },
-      { x: 0.0, y: -0.15, z: -1.8, scale: 0.76, rx: 0.42, ry: 1.15, rz: 0.05, ambientSpin: 0.2, canvasOpacity: 0.3 },
-      { x: 0.0, y: -0.1, z: -2.0, scale: 0.74, rx: 0.35, ry: 1.6, rz: 0.1, ambientSpin: 0.2, canvasOpacity: 0.26 },
-      { x: 2.15, y: -0.05, z: 0, scale: 0.86, rx: 0.38, ry: -0.56, rz: -0.05, ambientSpin: 0.0, canvasOpacity: 1 },
+      { x: -2.15, y: 0.05, z: 0, scale: 0.88, rx: 0.4, ry: 0.56, rz: -0.05, ambientSpin: 0.0, canvasOpacity: 1 },
+      { x: 0.0, y: -0.1, z: -2.1, scale: 0.72, rx: 0.36, ry: 1.5, rz: 0.08, ambientSpin: 0.18, canvasOpacity: 0.22 },
+      { x: -2.05, y: -0.04, z: 0, scale: 0.9, rx: 0.28, ry: -0.45, rz: 0.0, ambientSpin: 0.0, canvasOpacity: 1 },
+      { x: 0.0, y: -0.15, z: -1.9, scale: 0.72, rx: 0.44, ry: 0.9, rz: 0.05, ambientSpin: 0.16, canvasOpacity: 0.24 },
+      { x: 0.0, y: -0.2, z: -1.8, scale: 0.74, rx: 0.48, ry: 0.55, rz: -0.08, ambientSpin: 0.18, canvasOpacity: 0.26 },
+      { x: 0.0, y: 0.2, z: -1.7, scale: 0.76, rx: 0.36, ry: -0.5, rz: 0.0, ambientSpin: 0.12, canvasOpacity: 0.32 },
     ];
   }
   return [
-    { x: 0.0, y: -1.65, z: 0, scale: 0.52, rx: 0.42, ry: -0.58, rz: 0.05, ambientSpin: 0.0, canvasOpacity: 1 },
+    { x: 0.0, y: -1.92, z: 0, scale: 0.47, rx: 0.4, ry: 0.56, rz: -0.04, ambientSpin: 0.0, canvasOpacity: 1 },
+    { x: 0.0, y: 0.0, z: -1.9, scale: 0.46, rx: 0.36, ry: 1.5, rz: 0.06, ambientSpin: 0.15, canvasOpacity: 0.18 },
     { x: 0.0, y: 0.35, z: 0, scale: 0.64, rx: 0.28, ry: -0.45, rz: 0.0, ambientSpin: 0.0, canvasOpacity: 1 },
-    { x: 0.0, y: 0.0, z: -1.5, scale: 0.52, rx: 0.48, ry: 0.65, rz: -0.08, ambientSpin: 0.18, canvasOpacity: 0.32 },
-    { x: 0.0, y: 0.0, z: -1.65, scale: 0.5, rx: 0.42, ry: 1.15, rz: 0.04, ambientSpin: 0.17, canvasOpacity: 0.26 },
-    { x: 0.0, y: 0.0, z: -1.8, scale: 0.48, rx: 0.35, ry: 1.6, rz: 0.1, ambientSpin: 0.16, canvasOpacity: 0.22 },
-    { x: 0.0, y: -1.75, z: 0, scale: 0.5, rx: 0.38, ry: -0.56, rz: 0.0, ambientSpin: 0.0, canvasOpacity: 1 },
+    { x: 0.0, y: 0.0, z: -1.8, scale: 0.46, rx: 0.44, ry: 0.9, rz: 0.04, ambientSpin: 0.14, canvasOpacity: 0.2 },
+    { x: 0.0, y: 0.0, z: -1.7, scale: 0.48, rx: 0.48, ry: 0.55, rz: -0.06, ambientSpin: 0.15, canvasOpacity: 0.22 },
+    { x: 0.0, y: 0.0, z: -1.7, scale: 0.48, rx: 0.36, ry: -0.5, rz: 0.0, ambientSpin: 0.12, canvasOpacity: 0.24 },
   ];
 }
 
@@ -553,8 +553,7 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
           return;
         }
 
-        // Only hover-interact when on Hero, Skills, or Contact and not over foreground UI controls
-        if (isBackdropSection(activeSectionIndex) || isInteractiveDomTarget(e.target)) {
+        if (!isInteractiveCubeSection(activeSectionIndex) || isInteractiveDomTarget(e.target)) {
           clearHover();
           return;
         }
@@ -589,7 +588,7 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
       const onPointerDown = (e: PointerEvent) => {
         if (e.button !== 0) return;
         if (isInteractiveDomTarget(e.target)) return;
-        if (isBackdropSection(activeSectionIndex)) return;
+        if (!isInteractiveCubeSection(activeSectionIndex)) return;
 
         const hit = raycastCube(e.clientX, e.clientY);
         if (!hit) return;
@@ -719,10 +718,8 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
 
         ambientAngle += dt * pose.ambientSpin;
         const breatheY =
-          sectionIdx === 0 || sectionIdx === CONTACT_INDEX
-            ? Math.sin(now * 0.00055) * 0.22
-            : 0;
-        const spinY = isBackdropSection(sectionIdx) ? ambientAngle : 0;
+          sectionIdx === 0 ? Math.sin(now * 0.00055) * 0.22 : 0;
+        const spinY = !isInteractiveCubeSection(sectionIdx) ? ambientAngle : 0;
 
         rigGroup.rotation.x = lerp(rigGroup.rotation.x, pose.rx, smooth);
         rigGroup.rotation.y = lerp(
@@ -732,8 +729,7 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
         );
         rigGroup.rotation.z = lerp(rigGroup.rotation.z, pose.rz, smooth);
 
-        // Gently return orbit drag offset when scrolling outside Skills
-        if (sectionIdx !== 1 && !isDragging) {
+        if (sectionIdx !== SKILLS_INDEX && !isDragging) {
           targetOrbitX = lerp(targetOrbitX, 0, dt * 2.8);
           targetOrbitY = lerp(targetOrbitY, 0, dt * 2.8);
         }
