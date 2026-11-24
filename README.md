@@ -5,6 +5,12 @@
 <h1 align="center">Jhomar John Picar | 3D Rubik's Cube Portfolio</h1>
 
 <p align="center">
+  <a href="./assets/portfolio-demo.mp4">
+    <img src="./assets/portfolio-demo.webp" alt="Jhomar John Picar 3D Portfolio Walkthrough Demo" width="820" />
+  </a>
+</p>
+
+<p align="center">
   Interactive 3D developer portfolio built with React, TypeScript, Tailwind CSS v4, Framer Motion, WebGL Fluid, and Three.js. All 54 stickers on the playable 3x3x3 Rubik's Cube map to skills across six domains.
 </p>
 

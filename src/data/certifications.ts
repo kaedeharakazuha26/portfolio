@@ -38,8 +38,6 @@ export const CERTIFICATIONS: CertificationItem[] = [
     issuer: 'In progress',
     date: 'Expected January',
     status: 'upcoming',
-    summary:
-      'Reserved slot for your second certification completing in January. Update this entry and switch status to "earned" once issued.',
   },
   {
     id: 'cert-3',
@@ -48,7 +46,5 @@ export const CERTIFICATIONS: CertificationItem[] = [
     issuer: 'In progress',
     date: 'Expected January',
     status: 'upcoming',
-    summary:
-      'Reserved slot for your third certification completing in January. Update this entry and switch status to "earned" once issued.',
   },
 ];
