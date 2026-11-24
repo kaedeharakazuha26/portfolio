@@ -1,0 +1,56 @@
+// Earned and planned certifications.
+// Place future certificate files in public/certificates/ and reference them with BASE_URL.
+
+const BASE = import.meta.env.BASE_URL;
+
+export interface CertificationItem {
+  id: string;
+  slotLabel: string;
+  title: string;
+  issuer: string;
+  date: string;
+  status: 'earned' | 'upcoming';
+  credentialId?: string;
+  credentialUrl?: string;
+  pdfUrl?: string;
+  imageUrl?: string;
+  summary: string;
+  topics?: string[];
+}
+
+export const CERTIFICATIONS: CertificationItem[] = [
+  {
+    id: 'mstconnect-fullstack-2026',
+    slotLabel: 'Certificate 01',
+    title: 'Full-Stack Web Development Intensive Bootcamp 2026',
+    issuer: 'MSTConnect Educational Consultancy',
+    date: 'Oct 2026',
+    status: 'earned',
+    credentialId: '60-Hour Training · PRC CPD OCE-2022-062',
+    imageUrl: `${BASE}certificates/mstconnect-fullstack-bootcamp-2026.jpg`,
+    pdfUrl: `${BASE}certificates/mstconnect-fullstack-bootcamp-2026.pdf`,
+    summary:
+      'Completed 60 hours of hands-on training from Aug 24 to Oct 2, 2026 covering developer foundations, HTML/CSS, JavaScript, back-end databases and APIs, React, and capstone projects.',
+    topics: ['HTML & CSS', 'JavaScript', 'Back-End & APIs', 'React', 'Capstone'],
+  },
+  {
+    id: 'cert-2',
+    slotLabel: 'Certificate 02',
+    title: 'Upcoming Certification',
+    issuer: 'In progress',
+    date: 'Expected January',
+    status: 'upcoming',
+    summary:
+      'Reserved slot for your second certification completing in January. Update this entry and switch status to "earned" once issued.',
+  },
+  {
+    id: 'cert-3',
+    slotLabel: 'Certificate 03',
+    title: 'Upcoming Certification',
+    issuer: 'In progress',
+    date: 'Expected January',
+    status: 'upcoming',
+    summary:
+      'Reserved slot for your third certification completing in January. Update this entry and switch status to "earned" once issued.',
+  },
+];
