@@ -1,15 +1,18 @@
 import { motion } from 'framer-motion';
 import { RotateCw, Shuffle } from 'lucide-react';
 import { PORTFOLIO_CONFIG } from '../data/config';
+import type { CubeSkill } from '../data/skills';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 
 interface HeroSectionProps {
+  hoveredSkill: CubeSkill | null;
   onQuickTwist: () => void;
   onQuickScramble: () => void;
   reducedMotion: boolean;
 }
 
 export function HeroSection({
+  hoveredSkill,
   onQuickTwist,
   onQuickScramble,
   reducedMotion,
@@ -48,26 +51,48 @@ export function HeroSection({
             {PORTFOLIO_CONFIG.bio}
           </p>
 
-          {/* Interactive cube & backdrop control strip right in Hero */}
+          {/* Interactive cube control strip + live hovered-tile readout */}
           {!reducedMotion && (
-            <div className="mt-6 flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={onQuickTwist}
-                className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-3.5 font-mono text-xs font-semibold text-zinc-900 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#121318] dark:text-zinc-100 dark:hover:border-amber-400"
-              >
-                <RotateCw className="h-3.5 w-3.5 text-amber-700 dark:text-amber-400" aria-hidden="true" />
-                <span>Twist Cube</span>
-              </button>
+            <div className="mt-6 space-y-2.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={onQuickTwist}
+                  className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-3.5 font-mono text-xs font-semibold text-zinc-900 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#121318] dark:text-zinc-100 dark:hover:border-amber-400"
+                >
+                  <RotateCw className="h-3.5 w-3.5 text-amber-700 dark:text-amber-400" aria-hidden="true" />
+                  <span>Twist Cube</span>
+                </button>
 
-              <button
-                type="button"
-                onClick={onQuickScramble}
-                className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-3.5 font-mono text-xs font-semibold text-zinc-900 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#121318] dark:text-zinc-100 dark:hover:border-amber-400"
-              >
-                <Shuffle className="h-3.5 w-3.5 text-cyan-700 dark:text-cyan-400" aria-hidden="true" />
-                <span>Scramble</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={onQuickScramble}
+                  className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-3.5 font-mono text-xs font-semibold text-zinc-900 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#121318] dark:text-zinc-100 dark:hover:border-amber-400"
+                >
+                  <Shuffle className="h-3.5 w-3.5 text-cyan-700 dark:text-cyan-400" aria-hidden="true" />
+                  <span>Scramble</span>
+                </button>
+              </div>
+
+              <div className="flex min-h-7 items-center gap-2 font-mono text-xs text-zinc-600 dark:text-zinc-400">
+                {hoveredSkill ? (
+                  <>
+                    <span
+                      className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
+                      style={{ backgroundColor: hoveredSkill.color }}
+                      aria-hidden="true"
+                    />
+                    <span className="font-semibold text-zinc-950 dark:text-white">
+                      {hoveredSkill.name}
+                    </span>
+                    <span className="truncate text-zinc-600 dark:text-zinc-400">
+                      · {hoveredSkill.domain}
+                    </span>
+                  </>
+                ) : (
+                  <span>Drag the 3D cube or hover any tile to inspect a skill</span>
+                )}
+              </div>
             </div>
           )}
 

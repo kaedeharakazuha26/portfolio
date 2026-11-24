@@ -181,6 +181,7 @@ export function App() {
 
       <main id="main-content">
         <HeroSection
+          hoveredSkill={hoveredSkill}
           onQuickTwist={handleTwistRandom}
           onQuickScramble={handleScramble}
           reducedMotion={reducedMotion}

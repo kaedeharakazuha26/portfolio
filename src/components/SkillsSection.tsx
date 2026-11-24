@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { RotateCcw, RotateCw, Shuffle } from 'lucide-react';
 import {
   CUBE_FACES,
@@ -164,13 +164,12 @@ export function SkillsSection({
                 data-ui-block="true"
                 className="rounded-xl border border-zinc-900/18 bg-white p-6 dark:border-white/16 dark:bg-[#121318]"
               >
-                <AnimatePresence mode="wait">
+                <div className="min-h-[132px]">
                   <motion.div
                     key={activeSkill.id}
-                    initial={{ opacity: 0, y: 6 }}
+                    initial={{ opacity: 0.45, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.14 }}
+                    transition={{ duration: 0.14, ease: 'easeOut' }}
                   >
                     <div className="flex items-center justify-between gap-3">
                       <span className="inline-flex items-center gap-2 rounded-md border border-zinc-900/14 bg-zinc-100 px-2.5 py-1 font-mono text-[11px] font-semibold text-zinc-800 dark:border-white/14 dark:bg-white/[0.06] dark:text-zinc-200">
@@ -194,7 +193,7 @@ export function SkillsSection({
                       {activeSkill.tagline}
                     </p>
                   </motion.div>
-                </AnimatePresence>
+                </div>
 
                 <div className="mt-5 border-t border-zinc-900/12 pt-4 dark:border-white/12">
                   <p className="mb-2.5 font-mono text-xs font-medium text-zinc-600 dark:text-zinc-400">

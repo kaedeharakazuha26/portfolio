@@ -141,26 +141,34 @@ const SECTION_IDS = [
 ] as const;
 
 const SKILLS_INDEX = 2;
-const isInteractiveCubeSection = (idx: number) => idx === 0 || idx === SKILLS_INDEX;
+const CONTACT_INDEX = 5;
+const isInteractiveCubeSection = (idx: number) =>
+  idx === 0 || idx === SKILLS_INDEX || idx === CONTACT_INDEX;
 
 function getPoses(isDesktop: boolean): SectionPose[] {
   if (isDesktop) {
     return [
+      // 0: Hero (left centerpiece, interactive)
       { x: -2.15, y: 0.05, z: 0, scale: 0.88, rx: 0.4, ry: 0.56, rz: -0.05, ambientSpin: 0.0, canvasOpacity: 1 },
-      { x: 0.0, y: -0.1, z: -2.1, scale: 0.72, rx: 0.36, ry: 1.5, rz: 0.08, ambientSpin: 0.18, canvasOpacity: 0.22 },
+      // 1: Projects (recedes cleanly out of the way so cards stay crisp)
+      { x: -2.1, y: -0.25, z: -3.4, scale: 0.52, rx: 0.36, ry: 1.5, rz: 0.08, ambientSpin: 0.18, canvasOpacity: 0 },
+      // 2: Skills (left stage with generous gap from Skill Inspector card)
       { x: -2.05, y: -0.04, z: 0, scale: 0.9, rx: 0.28, ry: -0.45, rz: 0.0, ambientSpin: 0.0, canvasOpacity: 1 },
-      { x: 0.0, y: -0.15, z: -1.9, scale: 0.72, rx: 0.44, ry: 0.9, rz: 0.05, ambientSpin: 0.16, canvasOpacity: 0.24 },
-      { x: 0.0, y: -0.2, z: -1.8, scale: 0.74, rx: 0.48, ry: 0.55, rz: -0.08, ambientSpin: 0.18, canvasOpacity: 0.26 },
-      { x: 0.0, y: 0.2, z: -1.7, scale: 0.76, rx: 0.36, ry: -0.5, rz: 0.0, ambientSpin: 0.12, canvasOpacity: 0.32 },
+      // 3: Certifications (recedes cleanly)
+      { x: 0.4, y: -0.2, z: -3.4, scale: 0.52, rx: 0.44, ry: 0.9, rz: 0.05, ambientSpin: 0.16, canvasOpacity: 0 },
+      // 4: Experience (recedes cleanly, zero peeking behind cards)
+      { x: 1.5, y: -0.2, z: -3.2, scale: 0.55, rx: 0.48, ry: 0.55, rz: -0.08, ambientSpin: 0.18, canvasOpacity: 0 },
+      // 5: Contact (sweeps onto the right stage beside Contact Form, fully interactive)
+      { x: 2.1, y: -0.1, z: 0, scale: 0.86, rx: 0.36, ry: -0.52, rz: 0.04, ambientSpin: 0.0, canvasOpacity: 1 },
     ];
   }
   return [
     { x: 0.0, y: -1.92, z: 0, scale: 0.47, rx: 0.4, ry: 0.56, rz: -0.04, ambientSpin: 0.0, canvasOpacity: 1 },
-    { x: 0.0, y: 0.0, z: -1.9, scale: 0.46, rx: 0.36, ry: 1.5, rz: 0.06, ambientSpin: 0.15, canvasOpacity: 0.18 },
+    { x: 0.0, y: 0.0, z: -3.0, scale: 0.38, rx: 0.36, ry: 1.5, rz: 0.06, ambientSpin: 0.15, canvasOpacity: 0 },
     { x: 0.0, y: 0.35, z: 0, scale: 0.64, rx: 0.28, ry: -0.45, rz: 0.0, ambientSpin: 0.0, canvasOpacity: 1 },
-    { x: 0.0, y: 0.0, z: -1.8, scale: 0.46, rx: 0.44, ry: 0.9, rz: 0.04, ambientSpin: 0.14, canvasOpacity: 0.2 },
-    { x: 0.0, y: 0.0, z: -1.7, scale: 0.48, rx: 0.48, ry: 0.55, rz: -0.06, ambientSpin: 0.15, canvasOpacity: 0.22 },
-    { x: 0.0, y: 0.0, z: -1.7, scale: 0.48, rx: 0.36, ry: -0.5, rz: 0.0, ambientSpin: 0.12, canvasOpacity: 0.24 },
+    { x: 0.0, y: 0.0, z: -3.0, scale: 0.38, rx: 0.44, ry: 0.9, rz: 0.04, ambientSpin: 0.14, canvasOpacity: 0 },
+    { x: 0.0, y: 0.0, z: -3.0, scale: 0.38, rx: 0.48, ry: 0.55, rz: -0.06, ambientSpin: 0.15, canvasOpacity: 0 },
+    { x: 0.0, y: 0.0, z: -3.0, scale: 0.42, rx: 0.36, ry: -0.5, rz: 0.0, ambientSpin: 0.12, canvasOpacity: 0 },
   ];
 }
 
@@ -536,6 +544,7 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
         setStickerEmissive(hoveredSticker, 0.04);
         hoveredSticker = null;
         document.body.style.cursor = '';
+        document.body.style.userSelect = '';
         callbacksRef.current.onHoverSkill(null);
       };
 
@@ -580,6 +589,7 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
             callbacksRef.current.onHoverSkill(skill);
           } else {
             document.body.style.cursor = '';
+        document.body.style.userSelect = '';
             callbacksRef.current.onHoverSkill(null);
           }
         }
@@ -599,12 +609,14 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
         dragLastY = e.clientY;
         pointerDownHitSticker = hit;
         document.body.style.cursor = 'grabbing';
+        document.body.style.userSelect = 'none';
       };
 
       const onPointerUp = () => {
         if (!isDragging) return;
         isDragging = false;
         document.body.style.cursor = hoveredSticker ? 'grab' : '';
+        document.body.style.userSelect = '';
 
         // Short tap/click on a sticker selects that skill & triggers a crisp tactile twist!
         if (dragMovedPx < 6 && pointerDownHitSticker) {
@@ -633,9 +645,11 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
         const centers = SECTION_IDS.map((id, idx) => {
           const el = document.getElementById(id);
           if (!el) return idx * vh;
-          return el.offsetTop;
+          // Anchor choreography to the scrollY where each section visually frames the viewport
+          return Math.max(0, el.offsetTop + Math.min(el.offsetHeight, vh) * 0.5 - vh * 0.5);
         });
 
+        const viewCenter = scrollY + vh * 0.5;
         let seg = 0;
         for (let i = 0; i < centers.length - 1; i++) {
           if (scrollY >= centers[i]) seg = i;
@@ -647,13 +661,29 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
         // Smoothstep easing between sections
         const t = rawT * rawT * (3 - 2 * rawT);
 
+        // Determine visually dominant section for crisp opacity gating (no peeking over Projects/Experience)
+        let dominantIdx = 0;
+        let minDist = Infinity;
+        SECTION_IDS.forEach((id, idx) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const top = el.offsetTop;
+          const bottom = top + el.offsetHeight;
+          const dist =
+            viewCenter >= top && viewCenter <= bottom
+              ? 0
+              : Math.min(Math.abs(viewCenter - top), Math.abs(viewCenter - bottom));
+          if (dist < minDist) {
+            minDist = dist;
+            dominantIdx = idx;
+          }
+        });
+
         const a = poses[seg];
         const b = poses[Math.min(seg + 1, poses.length - 1)];
 
-        const nearestIdx = rawT > 0.5 ? Math.min(seg + 1, poses.length - 1) : seg;
-
         return {
-          sectionIdx: nearestIdx,
+          sectionIdx: dominantIdx,
           pose: {
             x: lerp(a.x, b.x, t),
             y: lerp(a.y, b.y, t),
@@ -663,7 +693,7 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
             ry: lerp(a.ry, b.ry, t),
             rz: lerp(a.rz, b.rz, t),
             ambientSpin: lerp(a.ambientSpin, b.ambientSpin, t),
-            canvasOpacity: lerp(a.canvasOpacity, b.canvasOpacity, t),
+            canvasOpacity: poses[dominantIdx].canvasOpacity,
           },
         };
       };
@@ -718,7 +748,9 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
 
         ambientAngle += dt * pose.ambientSpin;
         const breatheY =
-          sectionIdx === 0 ? Math.sin(now * 0.00055) * 0.22 : 0;
+          sectionIdx === 0 || sectionIdx === CONTACT_INDEX
+            ? Math.sin(now * 0.00055) * 0.22
+            : 0;
         const spinY = !isInteractiveCubeSection(sectionIdx) ? ambientAngle : 0;
 
         rigGroup.rotation.x = lerp(rigGroup.rotation.x, pose.rx, smooth);
@@ -729,7 +761,7 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
         );
         rigGroup.rotation.z = lerp(rigGroup.rotation.z, pose.rz, smooth);
 
-        if (sectionIdx !== SKILLS_INDEX && !isDragging) {
+        if (sectionIdx !== SKILLS_INDEX && sectionIdx !== CONTACT_INDEX && !isDragging) {
           targetOrbitX = lerp(targetOrbitX, 0, dt * 2.8);
           targetOrbitY = lerp(targetOrbitY, 0, dt * 2.8);
         }
@@ -842,6 +874,7 @@ export const RubiksCubeCanvas = forwardRef<RubiksCubeHandle, RubiksCubeCanvasPro
         window.removeEventListener('pointerdown', onPointerDown);
         window.removeEventListener('pointerup', onPointerUp);
         document.body.style.cursor = '';
+        document.body.style.userSelect = '';
 
         cubieGeo.dispose();
         stickerGeo.dispose();

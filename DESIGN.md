@@ -28,4 +28,4 @@ Dial: ENERGY 3 / RHYTHM 3 / MOTION 3
 3. Interactive 3D Skill Cube: cube centered left with face selector and skill inspector on the right.
 4. Certifications: 3-slot credential ledger with real MSTConnect Bootcamp 2026 preview and PDF.
 5. Experience: compact vertical timeline rail with warm amber current indicator.
-6. Contact: centered 2-column split card with explicit loading, error, and success states.
+6. Contact: Left-column validated form with quick social/spin controls paired with the interactive 3D Rubik's Cube on the right stage.

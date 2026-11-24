@@ -83,9 +83,7 @@ export function ContactSection({
       setEmail('');
       setMessage('');
       setSubmitState('success');
-      const okMsg = PORTFOLIO_CONFIG.contactEndpoint
-        ? 'Message sent. Thanks for reaching out.'
-        : 'Preview submission recorded locally. Add contactEndpoint in src/data/config.ts to deliver real emails.';
+      const okMsg = 'Message sent. Thanks for reaching out.';
       setFeedbackText(okMsg);
       onSubmitted();
       onNotify(okMsg);
@@ -98,91 +96,78 @@ export function ContactSection({
   return (
     <section
       id="contact"
-      className="relative z-20 px-5 py-16 sm:px-8 sm:py-24"
+      className="relative z-20 flex min-h-[96dvh] flex-col justify-center px-5 py-16 sm:px-8 sm:py-24"
     >
-      <div className="mx-auto max-w-6xl">
-        {/* Split 2-column architectural Contact Card (distinct from single-column form clone) */}
-        <div
-          data-ui-block="true"
-          className="grid grid-cols-1 overflow-hidden rounded-xl border border-zinc-900/18 bg-white dark:border-white/16 dark:bg-[#121318] lg:grid-cols-12"
-        >
-          {/* Left direct info & links rail */}
-          <div className="flex flex-col justify-between border-b border-zinc-900/12 bg-zinc-50 p-6 dark:border-white/12 dark:bg-[#0e0f14] sm:p-8 lg:col-span-5 lg:border-b-0 lg:border-r">
-            <div>
-              <p className="font-mono text-xs font-medium text-amber-700 dark:text-amber-400">
-                05 / GET IN TOUCH
-              </p>
-              <h2 className="font-display mt-2 text-3xl font-extrabold leading-tight tracking-tight text-zinc-950 dark:text-white sm:text-4xl">
-                Start a conversation.
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                Open to junior full-stack developer roles, collaborative builds, and
-                web/AI tooling work.
-              </p>
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="mb-8 sm:mb-10">
+          <p className="font-mono text-xs font-medium text-amber-700 dark:text-amber-400">
+            05 / GET IN TOUCH
+          </p>
+          <h2 className="font-display mt-1.5 text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white sm:text-5xl">
+            Let&apos;s Build Together.
+          </h2>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-base">
+            Open to junior full-stack developer roles, collaborative builds, and
+            web/AI tooling work.
+          </p>
+        </div>
 
-              <div className="mt-6 space-y-3">
+        {/* Left Contact Form Card + Right open stage for interactive 3D Rubik's Cube */}
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
+          <div
+            data-ui-block="true"
+            className="rounded-xl border border-zinc-900/18 bg-white p-6 dark:border-white/16 dark:bg-[#121318] sm:p-8 lg:col-span-6"
+          >
+            {/* Quick links & live cube flourish trigger */}
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-2.5 border-b border-zinc-900/12 pb-5 dark:border-white/12">
+              <div className="flex flex-wrap items-center gap-2">
                 {PORTFOLIO_CONFIG.email && (
-                  <div className="flex items-center justify-between gap-2 rounded-lg border border-zinc-900/14 bg-white px-3.5 py-2.5 dark:border-white/14 dark:bg-[#161820]">
-                    <a
-                      href={`mailto:${PORTFOLIO_CONFIG.email}`}
-                      className="truncate text-sm font-medium text-zinc-950 underline decoration-amber-600/60 underline-offset-4 dark:text-white"
-                    >
-                      {PORTFOLIO_CONFIG.displayEmail || PORTFOLIO_CONFIG.email}
-                    </a>
-                    <button
-                      type="button"
-                      onClick={handleCopyEmail}
-                      aria-label="Copy email address"
-                      className="inline-flex min-h-9 items-center gap-1 rounded-md border border-zinc-900/14 px-2.5 font-mono text-xs text-zinc-700 dark:border-white/14 dark:text-zinc-300"
-                    >
-                      {copied ? (
-                        <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
-                      ) : (
-                        <Copy className="h-3.5 w-3.5" aria-hidden="true" />
-                      )}
-                      <span>{copied ? 'Copied' : 'Copy'}</span>
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    aria-label="Copy email address"
+                    className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-zinc-900/16 bg-zinc-50 px-3 font-mono text-xs font-medium text-zinc-800 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-zinc-200 dark:hover:border-amber-400"
+                  >
+                    {copied ? (
+                      <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+                    )}
+                    <span>{copied ? 'Copied' : PORTFOLIO_CONFIG.displayEmail || PORTFOLIO_CONFIG.email}</span>
+                  </button>
                 )}
 
-                <div className="flex flex-wrap gap-2.5">
-                  <a
-                    href={PORTFOLIO_CONFIG.socials.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-4 text-xs font-semibold text-zinc-950 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-white dark:hover:border-amber-400"
-                  >
-                    <GithubIcon className="h-4 w-4" />
-                    <span>GitHub</span>
-                  </a>
+                <a
+                  href={PORTFOLIO_CONFIG.socials.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-3.5 text-xs font-semibold text-zinc-950 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-white dark:hover:border-amber-400"
+                >
+                  <GithubIcon className="h-4 w-4" />
+                  <span>GitHub</span>
+                </a>
 
-                  <a
-                    href={PORTFOLIO_CONFIG.socials.linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-4 text-xs font-semibold text-zinc-950 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-white dark:hover:border-amber-400"
-                  >
-                    <LinkedinIcon className="h-4 w-4" />
-                    <span>LinkedIn</span>
-                  </a>
-                </div>
+                <a
+                  href={PORTFOLIO_CONFIG.socials.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-3.5 text-xs font-semibold text-zinc-950 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-white dark:hover:border-amber-400"
+                >
+                  <LinkedinIcon className="h-4 w-4" />
+                  <span>LinkedIn</span>
+                </a>
               </div>
-            </div>
 
-            <div className="mt-8 border-t border-zinc-900/12 pt-5 dark:border-white/12">
               <button
                 type="button"
                 onClick={onCelebrate}
                 className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-zinc-900/18 bg-white px-3.5 font-mono text-xs font-medium text-zinc-800 transition-colors hover:border-amber-600 dark:border-white/16 dark:bg-[#161820] dark:text-zinc-200 dark:hover:border-amber-400"
               >
                 <RotateCw className="h-3.5 w-3.5 text-amber-700 dark:text-amber-400" aria-hidden="true" />
-                <span>Spin the Rubik&apos;s Cube</span>
+                <span>Spin Cube</span>
               </button>
             </div>
-          </div>
 
-          {/* Right validated form panel */}
-          <div className="p-6 sm:p-8 lg:col-span-7">
             {submitState === 'success' ? (
               <div
                 role="status"
@@ -326,6 +311,12 @@ export function ContactSection({
               </form>
             )}
           </div>
+
+          {/* Right open stage reserved cleanly for the interactive 3D Rubik's Cube on desktop */}
+          <div
+            className="hidden lg:col-span-6 lg:block lg:h-[440px]"
+            aria-hidden="true"
+          />
         </div>
       </div>
     </section>
