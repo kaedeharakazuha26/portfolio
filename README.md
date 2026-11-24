@@ -5,6 +5,10 @@
 <h1 align="center">Jhomar John Picar | 3D Rubik's Cube Portfolio</h1>
 
 <p align="center">
+  <a href="https://kaedeharakazuha26.github.io/portfolio/"><strong>Live Site: https://kaedeharakazuha26.github.io/portfolio/</strong></a>
+</p>
+
+<p align="center">
   <a href="./assets/portfolio-demo.mp4">
     <img src="./assets/portfolio-demo.webp" alt="Jhomar John Picar 3D Portfolio Walkthrough Demo" width="820" />
   </a>
@@ -39,4 +43,4 @@ Edit files under `src/data/`:
 
 ## Deployment
 - **Vercel**: Import the repo. Vercel auto-detects Vite (`npm run build`, output `dist`).
-- **GitHub Pages**: Push to `main` and enable Settings > Pages > GitHub Actions (`.github/workflows/deploy-pages.yml`).
+- **GitHub Pages**: Live at https://kaedeharakazuha26.github.io/portfolio/ (push to `main` with Settings > Pages > GitHub Actions via `.github/workflows/deploy-pages.yml`).
