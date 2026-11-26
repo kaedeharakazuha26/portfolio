@@ -693,7 +693,7 @@ export function WebGLFluidCanvas({
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[1] opacity-70"
+      className="pointer-events-none fixed inset-0 z-[1] opacity-35"
     />
   );
 }
